@@ -35,7 +35,7 @@ jobs:
           git clone https://github.com/microsoft/vcpkg %VCPKG_ROOT%
           call %VCPKG_ROOT%\bootstrap-vcpkg.bat -disableMetrics
           %VCPKG_ROOT%\vcpkg integrate install
-          %VCPKG_ROOT%\vcpkg install freetype:x64-windows
+          %VCPKG_ROOT%\vcpkg install --triplet x64-windows
 
       - name: Build Release x64
         shell: cmd
