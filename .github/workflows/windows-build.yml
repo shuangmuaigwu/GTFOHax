@@ -28,8 +28,19 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Install vcpkg and freetype (x64)
+        shell: cmd
+        run: |
+          set VCPKG_ROOT=%TEMP%\vcpkg
+          git clone https://github.com/microsoft/vcpkg %VCPKG_ROOT%
+          call %VCPKG_ROOT%\bootstrap-vcpkg.bat -disableMetrics
+          %VCPKG_ROOT%\vcpkg install freetype:x64-windows
+
       - name: Build Release x64
-        run: msbuild GTFOHax.sln /m /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /v:minimal
+        shell: cmd
+        run: |
+          set VCPKG_ROOT=%TEMP%\vcpkg
+          msbuild GTFOHax.sln /m /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:VcpkgRoot=%VCPKG_ROOT% /p:VcpkgTriplet=x64-windows /v:minimal
 
       - name: Upload artifacts
         if: success()
