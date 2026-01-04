@@ -773,9 +773,42 @@ HRESULT __stdcall Hooks::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
             ImGuiIO& io = ImGui::GetIO();
             io.ImeWindowHandle = G::windowHwnd;
             G::defaultFont = io.Fonts->AddFontDefault();
+
+            auto mergeCjkIntoCurrentFont = [&](float fontSizePx)
+            {
+                const char* candidates[] = {
+                    "C:\\Windows\\Fonts\\msyh.ttc",  // Microsoft YaHei
+                    "C:\\Windows\\Fonts\\msyh.ttf",
+                    "C:\\Windows\\Fonts\\simhei.ttf", // SimHei
+                    "C:\\Windows\\Fonts\\simsun.ttc"  // SimSun
+                };
+
+                ImFontConfig mergeConfig;
+                mergeConfig.MergeMode = true;
+                mergeConfig.PixelSnapH = true;
+                mergeConfig.FontBuilderFlags |= ImGuiFreeTypeBuilderFlags::ImGuiFreeTypeBuilderFlags_ForceAutoHint;
+
+                const ImWchar* ranges = io.Fonts->GetGlyphRangesChineseSimplifiedCommon();
+
+                for (const char* path : candidates)
+                {
+                    DWORD attrs = GetFileAttributesA(path);
+                    if (attrs == INVALID_FILE_ATTRIBUTES || (attrs & FILE_ATTRIBUTE_DIRECTORY))
+                        continue;
+
+                    if (io.Fonts->AddFontFromFileTTF(path, fontSizePx, &mergeConfig, ranges) != nullptr)
+                        break;
+                }
+            };
+
+            mergeCjkIntoCurrentFont(16.0f);
+
             ImFontConfig config;
             config.FontBuilderFlags |= ImGuiFreeTypeBuilderFlags::ImGuiFreeTypeBuilderFlags_ForceAutoHint;
             G::espFont = io.Fonts->AddFontFromMemoryCompressedBase85TTF(Fonts::GetRobotoFontDataTTFBase85(), 14, &config);
+
+            mergeCjkIntoCurrentFont(14.0f);
+
             unsigned char* pixels;
             int width, height;
             io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
