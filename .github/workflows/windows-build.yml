@@ -13,7 +13,6 @@ on:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
   build:
@@ -36,4 +35,6 @@ jobs:
         with:
           name: GTFOHax-win64-Release
           if-no-files-found: warn
-          path: x64/Release/**
+          path: |
+            x64/Release/*.dll
+            x64/Release/*.exe
