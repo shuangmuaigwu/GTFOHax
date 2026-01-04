@@ -38,5 +38,5 @@ jobs:
           name: GTFOHax-win64-Release
           if-no-files-found: warn
           path: |
-            **/x64/Release/*.dll
-            **/x64/Release/*.exe
+            x64/Release/*.dll
+            x64/Release/*.exe
