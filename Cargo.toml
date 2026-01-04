@@ -1,0 +1,6 @@
+[workspace]
+members = ["rust/gtfohax"]
+resolver = "2"
+
+[workspace.metadata]
+target-platform = "x86_64-pc-windows-msvc"

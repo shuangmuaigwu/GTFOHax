@@ -1,5 +1,22 @@
 # Build Instructions
 
+## Rust Refactor (Windows 11 x64)
+
+A Rust workspace scaffold is available on the `rust` branch under `rust/gtfohax` with a root `Cargo.toml` workspace. The target platform is **Windows 11 x64** (`x86_64-pc-windows-msvc`).
+
+Build (Windows/MSVC):
+```cmd
+rustup target add x86_64-pc-windows-msvc
+cargo build --release --target x86_64-pc-windows-msvc
+```
+
+Output: `target/x86_64-pc-windows-msvc/release/gtfohax.dll`
+
+Run tests (host toolchain):
+```bash
+cargo test
+```
+
 ## Prerequisites
 1. Install [git](https://git-scm.com) and make sure Git from the command line is enabled.
 
