@@ -1,0 +1,28 @@
+{
+  "package": {
+    "productName": "GTFOHax UI",
+    "version": "0.1.0"
+  },
+  "build": {
+    "distDir": "../dist",
+    "devPath": "../dist"
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "targets": ["nsis"],
+      "icon": []
+    },
+    "windows": [
+      {
+        "title": "GTFOHax UI",
+        "width": 960,
+        "height": 600,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  }
+}

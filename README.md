@@ -17,6 +17,25 @@ Run tests (host toolchain):
 cargo test
 ```
 
+### Tauri Desktop UI (Windows 11 x64)
+
+A Tauri desktop shell lives in `rust/gtfohax-ui`, wired to the Rust core via an `invoke` command (`get_banner`).
+
+Prerequisites:
+- WebView2 runtime (ships with Windows 11)
+- Rust toolchain targeting `x86_64-pc-windows-msvc`
+
+Build:
+```cmd
+cd rust\gtfohax-ui
+cargo build --release --target x86_64-pc-windows-msvc
+```
+
+Run (development):
+```cmd
+cargo run
+```
+
 ## Prerequisites
 1. Install [git](https://git-scm.com) and make sure Git from the command line is enabled.
 

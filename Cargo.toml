@@ -1,5 +1,5 @@
 [workspace]
-members = ["rust/gtfohax"]
+members = ["rust/gtfohax", "rust/gtfohax-ui"]
 resolver = "2"
 
 [workspace.metadata]
