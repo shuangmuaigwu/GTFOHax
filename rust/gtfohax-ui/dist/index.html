@@ -8,8 +8,13 @@
     <script type="module">
       import { invoke } from "./tauri-api.js";
       async function showBanner() {
-        const banner = await invoke("get_banner");
-        document.getElementById("banner").textContent = banner;
+        const bannerEl = document.getElementById("banner");
+        try {
+          const banner = await invoke("get_banner");
+          bannerEl.textContent = banner;
+        } catch (err) {
+          bannerEl.textContent = "Tauri API not available in this preview.";
+        }
       }
       window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("load").addEventListener("click", showBanner);
