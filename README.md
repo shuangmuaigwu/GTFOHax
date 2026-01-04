@@ -1,5 +1,43 @@
 # Build Instructions
 
+## Rust Refactor (Windows 11 x64)
+
+A Rust workspace scaffold is available on the `rust` branch under `rust/gtfohax` with a root `Cargo.toml` workspace. The target platform is **Windows 11 x64** (`x86_64-pc-windows-msvc`).
+
+Build (Windows/MSVC):
+```cmd
+rustup target add x86_64-pc-windows-msvc
+cargo build --release --target x86_64-pc-windows-msvc
+```
+
+Output: `target/x86_64-pc-windows-msvc/release/gtfohax.dll`
+
+> On a Windows host where `x86_64-pc-windows-msvc` is already the default, `cargo build --release` is sufficient; the explicit target is useful when cross-compiling.
+
+Run tests (host toolchain):
+```bash
+cargo test
+```
+
+### Tauri Desktop UI (Windows 11 x64)
+
+A Tauri desktop shell lives in `rust/gtfohax-ui`, wired to the Rust core via an `invoke` command (`get_banner`).
+
+Prerequisites:
+- WebView2 runtime (ships with Windows 11)
+- Rust toolchain targeting `x86_64-pc-windows-msvc`
+
+Build:
+```cmd
+cd rust\gtfohax-ui
+cargo build --release --target x86_64-pc-windows-msvc
+```
+
+Run (development):
+```cmd
+cargo run
+```
+
 ## Prerequisites
 1. Install [git](https://git-scm.com) and make sure Git from the command line is enabled.
 

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GTFOHax UI</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module">
+      import { invoke } from "./tauri-api.js";
+      async function showBanner() {
+        const bannerEl = document.getElementById("banner");
+        try {
+          const banner = await invoke("get_banner");
+          bannerEl.textContent = banner;
+        } catch (err) {
+          bannerEl.textContent = "Tauri API not available in this preview.";
+        }
+      }
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("load").addEventListener("click", showBanner);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="card">
+      <h1>GTFOHax Tauri UI</h1>
+      <p>Press the button to query the Rust core banner.</p>
+      <button id="load">Load Banner</button>
+      <div id="banner" class="banner"></div>
+    </div>
+  </body>
+</html>

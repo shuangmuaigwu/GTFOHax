@@ -1,0 +1,16 @@
+[package]
+name = "gtfohax-ui"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Tauri desktop UI for GTFOHax on Windows 11 x64"
+license = "MIT"
+
+[dependencies]
+gtfohax = { path = "../gtfohax" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tauri = { version = "1.5", features = ["wry"] }
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }

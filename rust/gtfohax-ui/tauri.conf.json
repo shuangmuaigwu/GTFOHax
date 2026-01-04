@@ -1,0 +1,27 @@
+{
+  "package": {
+    "productName": "GTFOHax UI",
+    "version": "0.1.0"
+  },
+  "build": {
+    "distDir": "dist",
+    "devPath": "http://localhost:1420"
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "targets": ["nsis"]
+    },
+    "windows": [
+      {
+        "title": "GTFOHax UI",
+        "width": 960,
+        "height": 600,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' tauri://localhost"
+    }
+  }
+}

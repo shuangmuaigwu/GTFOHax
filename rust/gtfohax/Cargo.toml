@@ -1,0 +1,12 @@
+[package]
+name = "gtfohax"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Rust scaffold for GTFOHax targeting Windows 11 x64"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
