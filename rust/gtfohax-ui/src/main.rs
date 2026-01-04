@@ -12,11 +12,13 @@ fn main() {
         .invoke_handler(generate_handler![get_banner])
         .setup(|app| {
             let handle = app.handle();
-            let _ = handle.create_window(
+            tauri::WindowBuilder::new(
+                &handle,
                 "main",
                 tauri::WindowUrl::App("index.html".into()),
-                |builder, _attrs| builder.title(gtfohax::banner()),
-            );
+            )
+            .title(gtfohax::banner())
+            .build()?;
             Ok(())
         })
         .run(generate_context!())

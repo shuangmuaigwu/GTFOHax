@@ -5,13 +5,12 @@
   },
   "build": {
     "distDir": "../dist",
-    "devPath": "../dist"
+    "devPath": "http://localhost:1420"
   },
   "tauri": {
     "bundle": {
       "active": true,
-      "targets": ["nsis"],
-      "icon": []
+      "targets": ["nsis"]
     },
     "windows": [
       {
@@ -21,8 +20,6 @@
         "resizable": true
       }
     ],
-    "security": {
-      "csp": null
-    }
+    "security": {}
   }
 }
