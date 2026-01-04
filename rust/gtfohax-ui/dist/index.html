@@ -37,9 +37,10 @@
         font-size: 14px;
       }
     </style>
-    <script>
+    <script type="module">
+      import { invoke } from "./tauri-api.js";
       async function showBanner() {
-        const banner = await window.__TAURI__.core.invoke("get_banner");
+        const banner = await invoke("get_banner");
         document.getElementById("banner").textContent = banner;
       }
       window.addEventListener("DOMContentLoaded", () => {

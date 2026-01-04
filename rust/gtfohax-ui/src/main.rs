@@ -17,7 +17,7 @@ fn main() {
                 "main",
                 tauri::WindowUrl::App("index.html".into()),
             )
-            .title(gtfohax::banner())
+            .title("GTFOHax UI")
             .build()?;
             Ok(())
         })

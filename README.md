@@ -12,6 +12,8 @@ cargo build --release --target x86_64-pc-windows-msvc
 
 Output: `target/x86_64-pc-windows-msvc/release/gtfohax.dll`
 
+> On a Windows host where `x86_64-pc-windows-msvc` is already the default, `cargo build --release` is sufficient; the explicit target is useful when cross-compiling.
+
 Run tests (host toolchain):
 ```bash
 cargo test
