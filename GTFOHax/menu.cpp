@@ -12,6 +12,7 @@
 #include <cmath>
 #include <helpers.h>
 #include "utils/math.h"
+#pragma execution_character_set("utf-8")
 
 const char* tabs[] = {
     "玩家",
