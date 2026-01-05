@@ -371,3 +371,4 @@ FodyWeavers.xsd
 /refData/
 /build/
 target/
+.serena/

@@ -3,50 +3,175 @@
 #include "globals.h"
 #include <map>
 #include <array>
+#include <vector>
 
 namespace ESP
 {
     static std::map<std::string, std::string> espItems = {
+        { "Terminal", "Terminal" },
         { "Ammo Pack", "弹药包" },
-        { "artifact_muted", "遗物-沉默(artifact_muted)" },
-        { "artifact_bold", "遗物-大胆(artifact_bold)" },
-        { "artifact_aggressive", "遗物-激进(artifact_aggressive)" },
-        { "Bulkhead", "舱门" },
-        { "BULKHEAD_KEY", "舱门钥匙" },
-        { "Cargo Crate", "货箱(Cargo Crate)" },
-        { "Cargo Crate High Security", "高安全等级货箱(Cargo Crate High Security)" },
-        { "Collection Case", "收集案例(Collection Case)" },
-        { "Cryo Hardcase", "冷冻箱(Cryo Hardcase)" },
-        { "C-Foam Grenade", "C-泡沫手雷(C-Foam Grenade)" },
-        { "C-Foam Tripmine", "C-泡沫绊雷(C-Foam Tripmine)" },
-        { "DATA_CUBE", "数据立方(DATA_CUBE)" },
-        { "DATA SPHERE", "数据球(DATA SPHERE)" },
+        { "Bulkhead", "Bulkhead" },
+        { "BULKHEAD_KEY", "BULKHEAD_KEY" },
+        { "KEYCARD", "Keycard" },
+        { "Cargo Crate", "Cargo Crate" },
+        { "Cargo Crate High Security", "Cargo Crate High Security" },
+        { "Collection Case", "Collection Case" },
+        { "Cryo Hardcase", "Cryo Hardcase" },
+        { "DATA_CUBE", "DATA_CUBE" },
+        { "DATA SPHERE", "DATA SPHERE" },
+        { "Fog Repeller Turbine", "Fog Repeller Turbine" },
+        { "GLP Hormone", "GLP Hormone" },
+        { "Hard drive", "Hard drive" },
+        { "HSU", "HSU" },
+        { "NEONATE_HSU", "NEONATE_HSU" },
+        { "MATTER_WAVE_PROJECTOR", "MATTER_WAVE_PROJECTOR" },
+        { "Micro Drive", "Micro Drive" },
+        { "Partial Decoder", "Partial Decoder" },
+        { "Plant Sample", "Plant Sample" },
+        { "Power Cell", "CELL" },
+        { "IMPRINTED NEONATE HSU", "打印HSU" },
+        { "Personnel ID", "人员ID" },
+        { "MediPack", "医疗包" },
+        { "Tool Refill Pack", "工具补给包" },
         { "Disinfection Pack", "消毒包" },
         { "Explosive Trip Mine", "爆炸绊雷" },
         { "Fog Repeller", "驱雾器" },
-        { "Fog Repeller Turbine", "驱雾涡轮" },
         { "Glow Stick", "荧光棒" },
-        { "GLP Hormone", "GLP罐" },
-        { "Hard drive", "硬盘" },
-        { "HSU", "HSU" },
         { "I2-LP Syringe", "I2-LP注射器"},
         { "IIx Syringe", "IIx注射器"},
-        { "IMPRINTED NEONATE HSU", "打印新生HSU" },
-        { "KEYCARD", "Keycard" },
         { "Lock Melter", "熔锁器" },
         { "Long Range Flashlight", "远程手电" },
-        { "MATTER_WAVE_PROJECTOR", "物质波投射器(MATTER_WAVE_PROJECTOR)" },
-        { "MediPack", "医疗包" },
-        { "Micro Drive", "微型驱动器(Micro Drive)" },
-        { "NEONATE_HSU", "新生HSU(NEONATE_HSU)" },
         { "OSIP Hormone", "OSIP激素" },
-        { "Partial Decoder", "部分解码器(PartialDecoder)" },
-        { "Personnel ID", "人员ID" },
-        { "Plant Sample", "植物样本(PlantSample)" },
-        { "Power Cell", "电源电池(CELL)" },
-        { "Terminal", "终端(Terminal)" },
-        { "Tool Refill Pack", "工具补给包" },
+        { "C-Foam Grenade", "C-泡沫手雷(C-Foam Grenade)" },
+        { "C-Foam Tripmine", "C-泡沫绊雷(C-Foam Tripmine)" },
+        { "artifact_muted", "红色激素" },
+        { "artifact_bold", "紫色激素" },
+        { "artifact_aggressive", "普通激素" },
+
     };
+
+    // Explicit render order for the ESP menu (std::map iteration is sorted by key).
+    static const std::vector<std::string> espItemsOrder = {
+        "Terminal",
+        "Ammo Pack",
+        "Bulkhead",
+        "BULKHEAD_KEY",
+        "KEYCARD",
+        "Cargo Crate",
+        "Cargo Crate High Security",
+        "Collection Case",
+        "Cryo Hardcase",
+        "DATA_CUBE",
+        "DATA SPHERE",
+        "Fog Repeller Turbine",
+        "GLP Hormone",
+        "Hard drive",
+        "HSU",
+        "NEONATE_HSU",
+        "IMPRINTED NEONATE HSU",
+        "MATTER_WAVE_PROJECTOR",
+        "Micro Drive",
+        "Partial Decoder",
+        "Personnel ID",
+        "Plant Sample",
+        "Power Cell",
+        "MediPack",
+        "Tool Refill Pack",
+        "Disinfection Pack",
+        "Explosive Trip Mine",
+        "Fog Repeller",
+        "Glow Stick",
+        "I2-LP Syringe",
+        "IIx Syringe",
+        "Lock Melter",
+        "Long Range Flashlight",
+        "OSIP Hormone",
+        "C-Foam Grenade",
+        "C-Foam Tripmine",
+        "artifact_muted",
+        "artifact_bold",
+        "artifact_aggressive",
+    };
+
+    // 1) 分组的显示顺序（菜单里折叠/标题的顺序）
+    static const std::vector<std::string> espGroupsOrder = {
+        "门禁钥匙终端",
+        "任务物品",
+        "消耗品",
+        "其他",
+        "收集物"
+    };
+
+    // 2) 每个 item key 属于哪个分组（key 必须和 espItems/espItemsOrder 里的完全一致）
+    static const std::map<std::string, std::string> espItemToGroup = {
+        {"Terminal", "门禁钥匙终端"},
+        {"KEYCARD", "门禁钥匙终端"},
+        { "BULKHEAD_KEY", "门禁钥匙终端" },
+        { "Bulkhead", "门禁钥匙终端" },
+
+        { "Collection Case", "任务物品" },
+        { "Cryo Hardcase", "任务物品" },
+        { "Cargo Crate", "任务物品" },
+        { "Cargo Crate High Security", "任务物品" },
+        {"HSU", "任务物品"},
+        {"NEONATE_HSU", "任务物品"},
+        {"IMPRINTED NEONATE HSU", "任务物品"},
+        {"MATTER_WAVE_PROJECTOR", "任务物品"},
+        {"Power Cell", "任务物品"},
+        {"OSIP Hormone", "任务物品" },
+        { "Plant Sample", "任务物品" },
+        {"Fog Repeller Turbine", "任务物品"},
+        { "Personnel ID", "任务物品" },
+        { "Partial Decoder", "任务物品" },
+        { "Micro Drive", "任务物品" },
+        { "Hard drive", "任务物品" },
+        { "GLP Hormone", "任务物品" },
+        { "DATA_CUBE", "任务物品" },
+        { "DATA SPHERE", "任务物品" },
+
+
+        {"Ammo Pack", "消耗品"},
+        {"MediPack", "消耗品"},
+        {"Tool Refill Pack", "消耗品"},
+        {"Disinfection Pack", "消耗品"},
+        { "C-Foam Grenade", "消耗品" },
+        { "C-Foam Tripmine", "消耗品" },
+        { "Long Range Flashlight", "消耗品" },
+        { "Lock Melter", "消耗品" },
+        { "I2-LP Syringe", "消耗品"},
+        { "IIx Syringe", "消耗品"},
+        { "Glow Stick", "消耗品" },
+        { "Fog Repeller", "消耗品" },
+        { "Explosive Trip Mine", "消耗品" },
+
+        {"artifact_muted", "收集物"},
+        {"artifact_bold", "收集物"},
+        {"artifact_aggressive", "收集物"},
+
+    };
+    // 3) 小工具：拿分组名（没配置就归到 Other）
+    inline const std::string& EspGroupOf(const std::string& key)
+    {
+        static const std::string kOther = "Other";
+        auto it = espItemToGroup.find(key);
+        return (it == espItemToGroup.end()) ? kOther : it->second;
+    }
+
+    // 4) 小工具：按“分组 + 原始 espItemsOrder 顺序”遍历
+    template <class Fn>
+    inline void ForEachEspItemInGroup(const std::string& group, Fn&& fn)
+    {
+        for (const auto& key : espItemsOrder) {
+            if (EspGroupOf(key) != group) continue;
+
+            auto it = espItems.find(key);
+            if (it == espItems.end()) continue; // 防御：order 里有但 map 里没有
+
+            // fn(key, label)
+            fn(key, it->second);
+        }
+    }
+
 
     struct WorldESPItem
     {
@@ -326,7 +451,6 @@ namespace ESP
         AgentESPSection nonVisibleSec = AgentESPSection("NonVisible");
     };
 
-    extern std::map<std::string, std::string> espItemsReverse;
     extern std::map<std::string, WorldESPItem*> espItemsMap;
 
     extern KeyBindToggle worldESPToggleKey;

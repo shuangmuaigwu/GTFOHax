@@ -2,7 +2,6 @@
 
 namespace ESP
 {
-    std::map<std::string, std::string> espItemsReverse;
     std::map<std::string, WorldESPItem*> espItemsMap;
 
     KeyBindToggle worldESPToggleKey;
@@ -26,8 +25,6 @@ namespace ESP
         {
             WorldESPItem* temp = new WorldESPItem();
             espItemsMap.insert(std::pair<std::string, WorldESPItem*>((*it).first, temp));
-
-            espItemsReverse.insert(std::pair<std::string, std::string>((*it).second, (*it).first));
         }
     }
 

@@ -16,7 +16,7 @@
 const char* tabs[] = {
     "玩家",
     "透视",
-    "自瞄",
+    "自喵",
     "杂项",
     "配置"
 };
@@ -76,7 +76,7 @@ void RenderWatermark()
 
 void RenderTabPlayer()
 {
-    ImGui::Checkbox("上帝模式无敌", &Player::godmodeToggleKey.toggledOn);
+    ImGui::Checkbox("上帝模式(Godmode)", &Player::godmodeToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("GodmodeHotkey");
@@ -147,7 +147,7 @@ void RenderTabPlayer()
     ImGui::Hotkey("", Player::giveHealthKey);
     ImGui::PopID();
 
-    if (ImGui::Button("加消毒"))
+    if (ImGui::Button("消毒"))
         Player::GiveLocalDisinfection();
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
@@ -155,7 +155,7 @@ void RenderTabPlayer()
     ImGui::Hotkey("", Player::giveDisinKey);
     ImGui::PopID();
 
-    if (ImGui::Button("补弹药"))
+    if (ImGui::Button("子弹"))
         Player::GiveLocalAmmo();
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
@@ -247,25 +247,36 @@ void RenderTabESP()
         ImGui::SetCursorPosX(205);
         ImGui::Text("显示距离");
 
-        
-        for (auto it = ESP::espItemsReverse.begin(); it != ESP::espItemsReverse.end(); ++it)
+        for (const auto& group : ESP::espGroupsOrder)
         {
-            std::string name = (*it).first;
-            std::string code = (*it).second;
-            ESP::WorldESPItem* itemSetting = ESP::espItemsMap[code];
-            ImGui::Text(name.c_str());
-            ImGui::SameLine();
-            ImGui::SetCursorPosX(177);
-            ImGui::Checkbox(("##Checkbox" + name).c_str(), &itemSetting->enabled);
-            ImGui::SameLine();
-            ImGui::PushItemWidth(-25);
-            ImGui::SliderInt(("##Slider" + name).c_str(), &itemSetting->renderDistance, 0, 500);
-            ImGui::SameLine();
-            ImGui::ColorEdit4(("##Color" + name).c_str(), (float*)&itemSetting->renderColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-            itemSetting->outlineColor.w = itemSetting->renderColor.w;
+            if (!ImGui::TreeNode(group.c_str()))
+                continue;
+
+            ESP::ForEachEspItemInGroup(group, [&](const std::string& key, const std::string& label) {
+                auto settingIt = ESP::espItemsMap.find(key);
+                if (settingIt == ESP::espItemsMap.end() || settingIt->second == nullptr)
+                    return; // 防御：map 里没有该项设置
+
+                ESP::WorldESPItem* itemSetting = settingIt->second;
+
+                ImGui::PushID(key.c_str());
+                ImGui::TextUnformatted(label.c_str());
+                ImGui::SameLine();
+                ImGui::SetCursorPosX(177);
+                ImGui::Checkbox("##Enabled", &itemSetting->enabled);
+                ImGui::SameLine();
+                ImGui::PushItemWidth(-25);
+                ImGui::SliderInt("##Distance", &itemSetting->renderDistance, 0, 500);
+                ImGui::SameLine();
+                ImGui::ColorEdit4("##Color", (float*)&itemSetting->renderColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                itemSetting->outlineColor.w = itemSetting->renderColor.w;
+                ImGui::PopID();
+            });
+
+            ImGui::TreePop();
         }
     }
-    
+
     if (ImGui::CollapsingHeader("敌人"))
     {
         // TODO: Add options to show different enemy types:
@@ -291,7 +302,7 @@ void RenderTabESP()
 
 void RenderTabAimbot()
 {
-    ImGui::Checkbox("敌人自瞄", &Aimbot::settings.toggleKey.toggledOn);
+    ImGui::Checkbox("敌人自喵", &Aimbot::settings.toggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::PushID("EnemyAimbotHotkey");
     ImGui::Hotkey("", Aimbot::settings.toggleKey);
@@ -303,7 +314,7 @@ void RenderTabAimbot()
     ImGui::Hotkey("", Aimbot::settings.holdKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("静默自瞄##EnemyAimbot", &Aimbot::settings.silentAim);
+    ImGui::Checkbox("静默自喵##EnemyAimbot", &Aimbot::settings.silentAim);
     ImGui::Checkbox("魔法子弹##EnemyAimbot", &Aimbot::settings.magicBullet);
     ImGui::Checkbox("仅可见##EnemyAimbot", &Aimbot::settings.visibleOnly);
     ImGui::Checkbox("优先护甲##EnemyAimbot", &Aimbot::settings.aimAtArmor);
@@ -485,7 +496,9 @@ void RenderArtifacts()
                 return;
         }
 
-        RenderPickupItem((*it).pickupItem, (*it).state, (*it).distance, itemCode, ESP::espItems[itemCode]);
+        auto displayIt = ESP::espItems.find(itemCode);
+        std::string itemName = (displayIt != ESP::espItems.end()) ? displayIt->second : itemCode;
+        RenderPickupItem((*it).pickupItem, (*it).state, (*it).distance, itemCode, itemName);
     }
     G::worldArtifMtx.unlock();
 }
