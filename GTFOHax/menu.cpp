@@ -6,6 +6,7 @@
 #include "hacks/aimbot.h"
 #include "config/config.h"
 #include "ui.h"
+#include "i18n.h"
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -13,20 +14,13 @@
 #include <helpers.h>
 #include "utils/math.h"
 
-const char* tabs[] = {
-    "玩家",
-    "透视",
-    "自喵",
-    "杂项",
-    "配置"
-};
-
-const char* corners[] = {
-    "左上",
-    "右上",
-    "左下",
-    "右下"
-};
+namespace
+{
+    std::string MakeLabeledId(const char* label, const std::string& id)
+    {
+        return std::string(label) + id;
+    }
+}
 
 ImVec2 RenderESPText(ImVec2 drawPos, ImU32 color, ImU32 outlineColor, std::string text, bool centered = true, bool swapHeight = false)
 {
@@ -65,7 +59,8 @@ void RenderWatermark()
         window_flags |= ImGuiWindowFlags_NoMove;
     }
     ImGui::SetNextWindowBgAlpha(0.35f);
-    ImGui::Begin("水印", 0, window_flags);
+    std::string title = MakeLabeledId(I18n::Tr("window.watermark"), "##Watermark");
+    ImGui::Begin(title.c_str(), 0, window_flags);
     ImGui::PushFont(G::espFont);
     static const std::string version = LIBRARY_VERSION;
     static const std::string watermarkText = "UnKnoWnCheaTs.me | mankool | V" + version;
@@ -76,70 +71,70 @@ void RenderWatermark()
 
 void RenderTabPlayer()
 {
-    ImGui::Checkbox("上帝模式(Godmode)", &Player::godmodeToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.godmode"), &Player::godmodeToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("GodmodeHotkey");
     ImGui::Hotkey("", Player::godmodeToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("无限弹药", &Player::infiAmmoToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.infinite_ammo"), &Player::infiAmmoToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("InfiAmmoHotkey");
     ImGui::Hotkey("", Player::infiAmmoToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("胶枪无冷却", &Player::glueInstantToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.instant_glue"), &Player::glueInstantToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("GlueInstantHotKey");
     ImGui::Hotkey("", Player::glueInstantToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("秒破解", &Player::instaHackToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.instant_hack"), &Player::instaHackToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("InstaHackHotKey");
     ImGui::Hotkey("", Player::instaHackToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("全自动", &Player::fullAutoToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.full_auto"), &Player::fullAutoToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("FullAutoHotKey");
     ImGui::Hotkey("", Player::fullAutoToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("无后坐力", &Player::noRecoilToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.no_recoil"), &Player::noRecoilToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("NoRecoilHotkey");
     ImGui::Hotkey("", Player::noRecoilToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("无散布", &Player::noSpreadToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.no_spread"), &Player::noSpreadToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("NoSpreadHotkey");
     ImGui::Hotkey("", Player::noSpreadToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("无抖动", &Player::noShakeToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.no_shake"), &Player::noShakeToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("NoShakeHotkey");
     ImGui::Hotkey("", Player::noShakeToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("去雾", &Player::noFogToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("player.no_fog"), &Player::noFogToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("NoFogHotkey");
     ImGui::Hotkey("", Player::noFogToggleKey);
     ImGui::PopID();
 
-    if (ImGui::Button("加血"))
+    if (ImGui::Button(I18n::Tr("player.give_health")))
         Player::GiveLocalHealth();
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
@@ -147,7 +142,7 @@ void RenderTabPlayer()
     ImGui::Hotkey("", Player::giveHealthKey);
     ImGui::PopID();
 
-    if (ImGui::Button("消毒"))
+    if (ImGui::Button(I18n::Tr("player.give_disinfection")))
         Player::GiveLocalDisinfection();
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
@@ -155,7 +150,7 @@ void RenderTabPlayer()
     ImGui::Hotkey("", Player::giveDisinKey);
     ImGui::PopID();
 
-    if (ImGui::Button("子弹"))
+    if (ImGui::Button(I18n::Tr("player.give_ammo")))
         Player::GiveLocalAmmo();
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
@@ -166,93 +161,94 @@ void RenderTabPlayer()
 
 void RenderAgentESPSection(ESP::AgentESPSection& section)
 {
-    ImGui::Checkbox(("启用##EnemyCheckbox" + section.type).c_str(), &section.show);
+    ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.enable"), "##EnemyCheckbox" + section.type).c_str(), &section.show);
 
-    if (ImGui::TreeNode("方框"))
+    if (ImGui::TreeNode(MakeLabeledId(I18n::Tr("common.box"), "##EnemyBoxesTree" + section.type).c_str()))
     {
-        ImGui::Checkbox(("2D方框##Enemy" + section.type).c_str(), &section.showBoxes);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.box_2d"), "##Enemy" + section.type).c_str(), &section.showBoxes);
         ImGui::SameLine();
         ImGui::ColorEdit4(("##EnemyBoxesColor" + section.type).c_str(), (float*)&section.boxesColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
         section.boxesOutlineColor.w = section.boxesColor.w;
 
-        ImGui::Checkbox(("血条##Enemy" + section.type).c_str(), &section.showHealthBar);
-        ImGui::Text("血条粗细");
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.health_bar"), "##Enemy" + section.type).c_str(), &section.showHealthBar);
+        ImGui::Text(I18n::Tr("common.health_bar_thickness"));
         ImGui::PushItemWidth(-21);
         ImGui::SliderInt(("##SliderEnemyHealthBarThickness" + section.type).c_str(), &section.healthBarThickness, 1, 20);
 
-        ImGui::Checkbox(("血条数值##Enemy" + section.type).c_str(), &section.healthBarText);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.health_value"), "##Enemy" + section.type).c_str(), &section.healthBarText);
         ImGui::SameLine();
         ImGui::ColorEdit4(("##EnemyHealthBarTextColor" + section.type).c_str(), (float*)&section.healthBarTextColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
         section.healthBarTextOutlineColor.w = section.healthBarTextColor.w;
-        ImGui::Checkbox(("满血显示数值##Enemy" + section.type).c_str(), &section.healthBarTextFull);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.health_value_full"), "##Enemy" + section.type).c_str(), &section.healthBarTextFull);
         
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("敌人信息"))
+    if (ImGui::TreeNode(MakeLabeledId(I18n::Tr("common.enemy_info"), "##EnemyInfoTree" + section.type).c_str()))
     {
-        ImGui::Checkbox(("启用##EnemyInfo" + section.type).c_str(), &section.showInfo);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.enable"), "##EnemyInfo" + section.type).c_str(), &section.showInfo);
         ImGui::SameLine();
         ImGui::ColorEdit4(("##EnemyTextColor" + section.type).c_str(), (float*)&section.textColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
         section.textOutlineColor.w = section.textColor.w;
                 
-        ImGui::Checkbox(("名称##EnemyName" + section.type).c_str(), &section.showName);
-        ImGui::Checkbox(("类型##EnemyType" + section.type).c_str(), &section.showType);
-        ImGui::Checkbox(("生命值##EnemyHealth" + section.type).c_str(), &section.showHealth);
-        ImGui::Checkbox(("距离##EnemyDistance" + section.type).c_str(), &section.showDistance);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.name"), "##EnemyName" + section.type).c_str(), &section.showName);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.type"), "##EnemyType" + section.type).c_str(), &section.showType);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.health"), "##EnemyHealth" + section.type).c_str(), &section.showHealth);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.distance"), "##EnemyDistance" + section.type).c_str(), &section.showDistance);
 
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("骨骼"))
+    if (ImGui::TreeNode(MakeLabeledId(I18n::Tr("common.skeleton"), "##EnemySkeletonTree" + section.type).c_str()))
     {
-        ImGui::Checkbox(("启用##EnemySkeleton" + section.type).c_str(), &section.showSkeleton);
+        ImGui::Checkbox(MakeLabeledId(I18n::Tr("common.enable"), "##EnemySkeleton" + section.type).c_str(), &section.showSkeleton);
         ImGui::SameLine();
         ImGui::ColorEdit4(("##EnemySkeletonColor" + section.type).c_str(), (float*)&section.skeletonColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
 
-        ImGui::Text("显示距离");
+        ImGui::Text(I18n::Tr("common.render_distance"));
         ImGui::PushItemWidth(-21);
         ImGui::SliderInt(("##SliderEnemySkeletonDistance" + section.type).c_str(), &section.skeletonRenderDistance, 0, 500);
 
-        ImGui::Text("线条粗细");
+        ImGui::Text(I18n::Tr("common.line_thickness"));
         ImGui::PushItemWidth(-21);
         ImGui::SliderFloat(("##SliderEnemySkeletonThickness" + section.type).c_str(), &section.skeletonThickness, 0.0f, 10.0f);
 
         ImGui::TreePop();
     }
 
-    ImGui::Text("显示距离");
+    ImGui::Text(I18n::Tr("common.render_distance"));
     ImGui::PushItemWidth(-21);
     ImGui::SliderInt(("##SliderEnemyDistance" + section.type).c_str(), &section.renderDistance, 0, 500);
 }
 
 void RenderTabESP()
 {
-    ImGui::Checkbox("世界透视", &ESP::worldESPToggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("esp.world_esp"), &ESP::worldESPToggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("WorldESPHotkey");
     ImGui::Hotkey("", ESP::worldESPToggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("敌人透视", &ESP::enemyESP.toggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("esp.enemy_esp"), &ESP::enemyESP.toggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::SetCursorPosX(160);
     ImGui::PushID("EnemyESPHotkey");
     ImGui::Hotkey("", ESP::enemyESP.toggleKey);
     ImGui::PopID();
 
-    if (ImGui::CollapsingHeader("世界"))
+    if (ImGui::CollapsingHeader(MakeLabeledId(I18n::Tr("esp.world"), "##WorldSection").c_str()))
     {
         ImGui::SetCursorPosX(205);
-        ImGui::Text("显示距离");
+        ImGui::Text(I18n::Tr("common.render_distance"));
 
         for (const auto& group : ESP::espGroupsOrder)
         {
-            if (!ImGui::TreeNode(group.c_str()))
+            const std::string groupLabel = MakeLabeledId(I18n::Tr(group.c_str()), "##" + group);
+            if (!ImGui::TreeNode(groupLabel.c_str()))
                 continue;
 
-            ESP::ForEachEspItemInGroup(group, [&](const std::string& key, const std::string& label) {
+            ESP::ForEachEspItemInGroup(group, [&](const std::string& key, const char* label) {
                 auto settingIt = ESP::espItemsMap.find(key);
                 if (settingIt == ESP::espItemsMap.end() || settingIt->second == nullptr)
                     return; // 防御：map 里没有该项设置
@@ -260,7 +256,7 @@ void RenderTabESP()
                 ESP::WorldESPItem* itemSetting = settingIt->second;
 
                 ImGui::PushID(key.c_str());
-                ImGui::TextUnformatted(label.c_str());
+                ImGui::TextUnformatted(label);
                 ImGui::SameLine();
                 ImGui::SetCursorPosX(177);
                 ImGui::Checkbox("##Enabled", &itemSetting->enabled);
@@ -277,7 +273,7 @@ void RenderTabESP()
         }
     }
 
-    if (ImGui::CollapsingHeader("敌人"))
+    if (ImGui::CollapsingHeader(MakeLabeledId(I18n::Tr("esp.enemy"), "##EnemySection").c_str()))
     {
         // TODO: Add options to show different enemy types:
         //Weakling = 0x00000000,
@@ -286,13 +282,13 @@ void RenderTabESP()
         //MiniBoss = 0x00000003,
         //Boss = 0x00000004,
 
-        if (ImGui::TreeNode("可见"))
+        if (ImGui::TreeNode(MakeLabeledId(I18n::Tr("common.visible"), "##EnemyVisible").c_str()))
         {
             RenderAgentESPSection(ESP::enemyESP.visibleSec);
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNode("不可见"))
+        if (ImGui::TreeNode(MakeLabeledId(I18n::Tr("common.not_visible"), "##EnemyNotVisible").c_str()))
         {
             RenderAgentESPSection(ESP::enemyESP.nonVisibleSec);
             ImGui::TreePop();
@@ -302,34 +298,34 @@ void RenderTabESP()
 
 void RenderTabAimbot()
 {
-    ImGui::Checkbox("敌人自喵", &Aimbot::settings.toggleKey.toggledOn);
+    ImGui::Checkbox(I18n::Tr("aimbot.enemy"), &Aimbot::settings.toggleKey.toggledOn);
     ImGui::SameLine();
     ImGui::PushID("EnemyAimbotHotkey");
     ImGui::Hotkey("", Aimbot::settings.toggleKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("按住生效", &Aimbot::settings.holdOnly);
+    ImGui::Checkbox(I18n::Tr("aimbot.hold_only"), &Aimbot::settings.holdOnly);
     ImGui::SameLine();
     ImGui::PushID("EnemyAimbotHoldKey");
     ImGui::Hotkey("", Aimbot::settings.holdKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("静默自喵##EnemyAimbot", &Aimbot::settings.silentAim);
-    ImGui::Checkbox("魔法子弹##EnemyAimbot", &Aimbot::settings.magicBullet);
-    ImGui::Checkbox("仅可见##EnemyAimbot", &Aimbot::settings.visibleOnly);
-    ImGui::Checkbox("优先护甲##EnemyAimbot", &Aimbot::settings.aimAtArmor);
+    ImGui::Checkbox(MakeLabeledId(I18n::Tr("aimbot.silent"), "##EnemyAimbot").c_str(), &Aimbot::settings.silentAim);
+    ImGui::Checkbox(MakeLabeledId(I18n::Tr("aimbot.magic_bullet"), "##EnemyAimbot").c_str(), &Aimbot::settings.magicBullet);
+    ImGui::Checkbox(MakeLabeledId(I18n::Tr("aimbot.visible_only"), "##EnemyAimbot").c_str(), &Aimbot::settings.visibleOnly);
+    ImGui::Checkbox(MakeLabeledId(I18n::Tr("aimbot.aim_armor"), "##EnemyAimbot").c_str(), &Aimbot::settings.aimAtArmor);
     
-    ImGui::Text("瞄准距离");
+    ImGui::Text(I18n::Tr("aimbot.max_distance"));
     ImGui::SameLine();
     ImGui::PushItemWidth(-25);
     ImGui::SliderFloat("##AimDistanceSliderEnemyAimbot", &Aimbot::settings.maxDistance, 0.0f, 500.0f);
     
-    ImGui::Text("平滑");
+    ImGui::Text(I18n::Tr("aimbot.smoothing"));
     ImGui::SameLine();
     ImGui::PushItemWidth(-25);
     ImGui::SliderFloat("##SmoothingSliderEnemyAimbot", &Aimbot::settings.smoothing, 0.0f, 0.999f);
     
-    ImGui::Checkbox("显示FOV##EnemyAimbot", &Aimbot::settings.renderFOV);
+    ImGui::Checkbox(MakeLabeledId(I18n::Tr("aimbot.render_fov"), "##EnemyAimbot").c_str(), &Aimbot::settings.renderFOV);
     ImGui::SameLine();
     ImGui::PushItemWidth(-25);
     ImGui::SliderFloat("##SliderEnemyAimbotFOV", &Aimbot::settings.aimFov, 0.0f, 360.0f);
@@ -343,26 +339,37 @@ void RenderTabAimbot()
     //ImGui::Combo("##AimTypeEnemyAimbot", aimType, Aimbot::AimTypeItems, IM_ARRAYSIZE(Aimbot::AimTypeItems));
     
     int* aimPriority = reinterpret_cast<int*>(&Aimbot::settings.priority);
-    ImGui::Text("目标优先级");
+    ImGui::Text(I18n::Tr("aimbot.priority"));
     ImGui::SameLine();
-    ImGui::Combo("##AimPriorityEnemyAimbot", aimPriority, Aimbot::EnemyPriorityItems, IM_ARRAYSIZE(Aimbot::EnemyPriorityItems));
+    const char* priorityItems[] = {
+        I18n::Tr(Aimbot::EnemyPriorityItems[0]),
+        I18n::Tr(Aimbot::EnemyPriorityItems[1]),
+        I18n::Tr(Aimbot::EnemyPriorityItems[2])
+    };
+    ImGui::Combo("##AimPriorityEnemyAimbot", aimPriority, priorityItems, IM_ARRAYSIZE(priorityItems));
 }
 
 void RenderTabMisc()
 {
-    ImGui::Hotkey("菜单开关键", G::menuKey);
+    ImGui::Hotkey(I18n::Tr("misc.menu_key"), G::menuKey);
     
-    if (ImGui::Button("卸载菜单"))
+    if (ImGui::Button(I18n::Tr("misc.unload_menu")))
         G::running = false;
     ImGui::SameLine();
-    ImGui::Text("按键");
+    ImGui::Text(I18n::Tr("common.key"));
     ImGui::SameLine();
     ImGui::PushID("UnloadMenuKey");
     ImGui::Hotkey("", G::unloadKey);
     ImGui::PopID();
 
-    ImGui::Checkbox("水印", &G::watermark);
-    ImGui::Combo("位置##Watermark", &G::watermarkCorner, corners, IM_ARRAYSIZE(corners));
+    ImGui::Checkbox(I18n::Tr("misc.watermark"), &G::watermark);
+    const char* corners[] = {
+        I18n::Tr("corner.top_left"),
+        I18n::Tr("corner.top_right"),
+        I18n::Tr("corner.bottom_left"),
+        I18n::Tr("corner.bottom_right")
+    };
+    ImGui::Combo(MakeLabeledId(I18n::Tr("common.position"), "##Watermark").c_str(), &G::watermarkCorner, corners, IM_ARRAYSIZE(corners));
 
     static int selectedIndex = 0;
     if (ImGui::BeginCombo("##SpawnEnemyCombo", Enemy::enemyNames[selectedIndex].c_str()))
@@ -382,19 +389,27 @@ void RenderTabMisc()
         ImGui::EndCombo();
     }
     ImGui::SameLine();
-    if (ImGui::Button("生成敌人"))
+    if (ImGui::Button(I18n::Tr("misc.spawn_enemy")))
         Enemy::SpawnEnemy(Enemy::enemyIDs[Enemy::enemyNames[selectedIndex]], app::AgentMode__Enum::Hibernate); // TODO: Fix map issue
 }
 
 void RenderTabConfig()
 {
-    if (ImGui::Button("保存"))
+    if (ImGui::Button(I18n::Tr("config.save")))
         Config::Save();
 
     ImGui::SameLine();
 
-    if (ImGui::Button("读取"))
+    if (ImGui::Button(I18n::Tr("config.load")))
         Config::Load();
+
+    ImGui::Separator();
+    ImGui::Text(I18n::Tr("config.language"));
+    int languageIndex = I18n::GetLanguageIndex();
+    std::size_t languageCount = 0;
+    I18n::GetLanguageOptions(languageCount);
+    if (ImGui::Combo("##Language", &languageIndex, I18n::GetLanguageLabels(), static_cast<int>(languageCount)))
+        I18n::SetLanguageByIndex(languageIndex);
 }
 
 void RenderPickupItem(app::LG_PickupItem_Sync* pickupItem, app::pPickupItemState itemState, float distance, std::string itemCode, std::string terminalKey)
@@ -429,11 +444,11 @@ void RenderPickupItem(app::LG_PickupItem_Sync* pickupItem, app::pPickupItemState
         if (std::find(nonexistantItems.begin(), nonexistantItems.end(), itemName) == nonexistantItems.end())
         {
             nonexistantItems.push_back(itemName);
-            std::string error = "错误：" + itemName + " 不存在于 espItemsMap 中，请反馈此问题。";
+            std::string error = std::string(I18n::Tr("error.prefix")) + itemName + I18n::Tr("error.esp_item_missing_suffix");
             il2cppi_log_write(error);
         }
 #ifdef _DEBUG
-        std::string espStr = itemName + " [" + std::to_string(llround(distance)) + "米]";
+        std::string espStr = itemName + " [" + std::to_string(llround(distance)) + I18n::Tr("unit.meter") + "]";
         ImU32 color = ImGui::GetColorU32(ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
         ImU32 outlineColor = ImGui::GetColorU32(ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
         RenderESPText(w2sPos, color, outlineColor, espStr);
@@ -446,14 +461,11 @@ void RenderPickupItem(app::LG_PickupItem_Sync* pickupItem, app::pPickupItemState
     if (!espItemSetting->enabled || distance > espItemSetting->renderDistance)
         return;
 
-    if (itemCode == "Partial Decoder" || itemCode == "Personnel ID")
-    {
-        auto displayIt = ESP::espItems.find(itemCode);
-        itemName = (displayIt != ESP::espItems.end()) ? displayIt->second : itemCode;
-    }
-    else if (!terminalKey.empty())
+    if (!terminalKey.empty())
         itemName = terminalKey;
-    std::string espStr = itemName + " [" + std::to_string(llround(distance)) + "米]";
+    else if (ESP::espItems.find(itemCode) != ESP::espItems.end())
+        itemName = I18n::Tr(itemCode.c_str());
+    std::string espStr = itemName + " [" + std::to_string(llround(distance)) + I18n::Tr("unit.meter") + "]";
 
     ImU32 color = ImGui::GetColorU32(espItemSetting->renderColor);
     ImU32 outlineColor = ImGui::GetColorU32(espItemSetting->outlineColor);
@@ -496,8 +508,7 @@ void RenderArtifacts()
                 return;
         }
 
-        auto displayIt = ESP::espItems.find(itemCode);
-        std::string itemName = (displayIt != ESP::espItems.end()) ? displayIt->second : itemCode;
+        std::string itemName = I18n::Tr(itemCode.c_str());
         RenderPickupItem((*it).pickupItem, (*it).state, (*it).distance, itemCode, itemName);
     }
     G::worldArtifMtx.unlock();
@@ -588,8 +599,10 @@ void RenderTerminals()
             continue;
 
         std::string terminalName = il2cppi_to_string((*it).terminalItem->fields._ItemKey_k__BackingField);
-    std::string terminalPass = (*it).terminalItem->fields._IsPasswordProtected_k__BackingField ? "\n密码：" + il2cppi_to_string((*it).terminalItem->fields.m_password) : "";
-        std::string espStr = terminalName + " [" + std::to_string(llround((*it).distance)) + "米]" + terminalPass;
+        std::string terminalPass = (*it).terminalItem->fields._IsPasswordProtected_k__BackingField
+            ? "\n" + std::string(I18n::Tr("label.password")) + ": " + il2cppi_to_string((*it).terminalItem->fields.m_password)
+            : "";
+        std::string espStr = terminalName + " [" + std::to_string(llround((*it).distance)) + I18n::Tr("unit.meter") + "]" + terminalPass;
 
         ImU32 color = ImGui::GetColorU32(espTerminalSetting->renderColor);
         ImU32 outlineColor = ImGui::GetColorU32(espTerminalSetting->outlineColor);
@@ -617,7 +630,7 @@ void RenderHSUs()
         if (!Math::WorldToScreen((*it).position, w2sPos))
             continue;
 
-        std::string espStr = il2cppi_to_string((*it).hsuItem->fields.m_itemKey) + " [" + std::to_string(llround((*it).distance)) + "米]";
+        std::string espStr = il2cppi_to_string((*it).hsuItem->fields.m_itemKey) + " [" + std::to_string(llround((*it).distance)) + I18n::Tr("unit.meter") + "]";
 
         ImU32 color = ImGui::GetColorU32(espHSUSetting->renderColor);
         ImU32 outlineColor = ImGui::GetColorU32(espHSUSetting->outlineColor);
@@ -645,7 +658,7 @@ void RenderBulkheads()
         if (!Math::WorldToScreen((*it).position, w2sPos))
             continue;
 
-        std::string espStr = il2cppi_to_string((*it).bulkheadDC->fields.m_itemKey) + " [" + std::to_string(llround((*it).distance)) + "米]";
+        std::string espStr = il2cppi_to_string((*it).bulkheadDC->fields.m_itemKey) + " [" + std::to_string(llround((*it).distance)) + I18n::Tr("unit.meter") + "]";
 
         ImU32 color = ImGui::GetColorU32(espBulkheadSetting->renderColor);
         ImU32 outlineColor = ImGui::GetColorU32(espBulkheadSetting->outlineColor);
@@ -820,19 +833,19 @@ void RenderEnemyAgent(Enemy::EnemyInfo* enemyInfo, ESP::AgentESPSection* espSett
             switch (enemyInfo->enemyAgent->fields.EnemyData->fields._EnemyType_k__BackingField)
             {
             case app::eEnemyType__Enum::Weakling:
-                enemyType = "弱小";
+                enemyType = I18n::Tr("enemy.type.weakling");
                 break;
             case app::eEnemyType__Enum::Standard:
-                enemyType = "普通";
+                enemyType = I18n::Tr("enemy.type.standard");
                 break;
             case app::eEnemyType__Enum::Special:
-                enemyType = "特殊";
+                enemyType = I18n::Tr("enemy.type.special");
                 break;
             case app::eEnemyType__Enum::MiniBoss:
-                enemyType = "小Boss";
+                enemyType = I18n::Tr("enemy.type.miniboss");
                 break;
             case app::eEnemyType__Enum::Boss:
-                enemyType = "Boss";
+                enemyType = I18n::Tr("enemy.type.boss");
                 break;
             }
         }
@@ -852,9 +865,9 @@ void RenderEnemyAgent(Enemy::EnemyInfo* enemyInfo, ESP::AgentESPSection* espSett
 
         ImVec2 distanceTextSize = ImVec2();
         if (espSettings->showDistance)
-            distanceTextSize = RenderESPText(bottomCenter, color, outlineColor, "[" + std::to_string(llround(enemyInfo->distance)) + "米]", true, false);
+            distanceTextSize = RenderESPText(bottomCenter, color, outlineColor, "[" + std::to_string(llround(enemyInfo->distance)) + I18n::Tr("unit.meter") + "]", true, false);
         if (espSettings->showHealth)
-            RenderESPText(ImVec2(bottomCenter.x, bottomCenter.y + distanceTextSize.y), color, outlineColor, "血量: " + enemyHealth, true, false);
+            RenderESPText(ImVec2(bottomCenter.x, bottomCenter.y + distanceTextSize.y), color, outlineColor, std::string(I18n::Tr("label.health")) + ": " + enemyHealth, true, false);
 
     }
 
@@ -934,9 +947,16 @@ void RenderESP()
 void DrawMenu()
 {
     static int page = 0;
+    const char* tabs[] = {
+        I18n::Tr("tab.player"),
+        I18n::Tr("tab.esp"),
+        I18n::Tr("tab.aimbot"),
+        I18n::Tr("tab.misc"),
+        I18n::Tr("tab.config")
+    };
 
-
-    ImGui::Begin("菜单");
+    std::string title = MakeLabeledId(I18n::Tr("window.menu"), "##MainMenu");
+    ImGui::Begin(title.c_str());
     for (int i = 0; i < IM_ARRAYSIZE(tabs); i++)
     {
         if (i == page)

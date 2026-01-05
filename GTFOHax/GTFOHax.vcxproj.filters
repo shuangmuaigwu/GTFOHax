@@ -61,6 +61,9 @@
     <ClCompile Include="globals.cpp">
       <Filter>gtfohax</Filter>
     </ClCompile>
+    <ClCompile Include="i18n.cpp">
+      <Filter>gtfohax</Filter>
+    </ClCompile>
     <ClCompile Include="ui.cpp">
       <Filter>gtfohax</Filter>
     </ClCompile>
@@ -130,6 +133,9 @@
       <Filter>framework</Filter>
     </ClInclude>
     <ClInclude Include="globals.h">
+      <Filter>gtfohax</Filter>
+    </ClInclude>
+    <ClInclude Include="i18n.h">
       <Filter>gtfohax</Filter>
     </ClInclude>
     <ClInclude Include="..\imgui\imconfig.h">

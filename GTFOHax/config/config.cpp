@@ -4,6 +4,7 @@
 #include "player.h"
 #include "aimbot.h"
 #include "helpers.h"
+#include "i18n.h"
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -216,6 +217,7 @@ void Config::Save()
             {"UnloadKey", G::unloadKey},
             {"Watermark", G::watermark},
             {"WatermarkCorner", G::watermarkCorner},
+            {"Language", I18n::GetLanguageCode(I18n::GetLanguage())},
 
 
             {"GodmodeToggleKey", Player::godmodeToggleKey},
@@ -264,6 +266,10 @@ void Config::Load()
         JSON_GET("UnloadKey", G::unloadKey);
         JSON_GET("Watermark", G::watermark);
         JSON_GET("WatermarkCorner", G::watermarkCorner);
+        std::string languageCode;
+        JSON_GET("Language", languageCode);
+        if (!languageCode.empty())
+            I18n::SetLanguage(I18n::LanguageFromCode(languageCode));
 
 
         JSON_GET("GodmodeToggleKey", Player::godmodeToggleKey);

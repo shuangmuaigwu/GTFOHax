@@ -16,7 +16,7 @@ namespace Aimbot
     //    Bone,
     //};
 
-    static const char* EnemyPriorityItems[] = { "生命值", "距离", "视野(FOV)" };
+    static const char* EnemyPriorityItems[] = { "priority.health", "priority.distance", "priority.fov" };
     static const char* SelectedEnemyPriorityItem = NULL;
     enum EnemyPriority
     {

@@ -1,6 +1,7 @@
 #pragma once
 #include "InputUtil.h"
 #include "globals.h"
+#include "i18n.h"
 #include <map>
 #include <array>
 #include <vector>
@@ -9,10 +10,10 @@ namespace ESP
 {
     static std::map<std::string, std::string> espItems = {
         { "Terminal", "Terminal" },
-        { "Ammo Pack", "弹药包" },
+        { "Ammo Pack", "Ammo Pack" },
         { "Bulkhead", "Bulkhead" },
         { "BULKHEAD_KEY", "BULKHEAD_KEY" },
-        { "KEYCARD", "Keycard" },
+        { "KEYCARD", "KEYCARD" },
         { "Cargo Crate", "Cargo Crate" },
         { "Cargo Crate High Security", "Cargo Crate High Security" },
         { "Collection Case", "Collection Case" },
@@ -28,25 +29,25 @@ namespace ESP
         { "Micro Drive", "Micro Drive" },
         { "Partial Decoder", "Partial Decoder" },
         { "Plant Sample", "Plant Sample" },
-        { "Power Cell", "CELL" },
-        { "IMPRINTED NEONATE HSU", "打印HSU" },
-        { "Personnel ID", "人员ID" },
-        { "MediPack", "医疗包" },
-        { "Tool Refill Pack", "工具补给包" },
-        { "Disinfection Pack", "消毒包" },
-        { "Explosive Trip Mine", "爆炸绊雷" },
-        { "Fog Repeller", "驱雾器" },
-        { "Glow Stick", "荧光棒" },
-        { "I2-LP Syringe", "I2-LP注射器"},
-        { "IIx Syringe", "IIx注射器"},
-        { "Lock Melter", "熔锁器" },
-        { "Long Range Flashlight", "远程手电" },
-        { "OSIP Hormone", "OSIP激素" },
-        { "C-Foam Grenade", "C-泡沫手雷(C-Foam Grenade)" },
-        { "C-Foam Tripmine", "C-泡沫绊雷(C-Foam Tripmine)" },
-        { "artifact_muted", "红色激素" },
-        { "artifact_bold", "紫色激素" },
-        { "artifact_aggressive", "普通激素" },
+        { "Power Cell", "Power Cell" },
+        { "IMPRINTED NEONATE HSU", "IMPRINTED NEONATE HSU" },
+        { "Personnel ID", "Personnel ID" },
+        { "MediPack", "MediPack" },
+        { "Tool Refill Pack", "Tool Refill Pack" },
+        { "Disinfection Pack", "Disinfection Pack" },
+        { "Explosive Trip Mine", "Explosive Trip Mine" },
+        { "Fog Repeller", "Fog Repeller" },
+        { "Glow Stick", "Glow Stick" },
+        { "I2-LP Syringe", "I2-LP Syringe"},
+        { "IIx Syringe", "IIx Syringe"},
+        { "Lock Melter", "Lock Melter" },
+        { "Long Range Flashlight", "Long Range Flashlight" },
+        { "OSIP Hormone", "OSIP Hormone" },
+        { "C-Foam Grenade", "C-Foam Grenade" },
+        { "C-Foam Tripmine", "C-Foam Tripmine" },
+        { "artifact_muted", "artifact_muted" },
+        { "artifact_bold", "artifact_bold" },
+        { "artifact_aggressive", "artifact_aggressive" },
 
     };
 
@@ -95,64 +96,64 @@ namespace ESP
 
     // 1) 分组的显示顺序（菜单里折叠/标题的顺序）
     static const std::vector<std::string> espGroupsOrder = {
-        "门禁钥匙终端",
-        "任务物品",
-        "消耗品",
-        "其他",
-        "收集物"
+        "esp.group.security",
+        "esp.group.objective",
+        "esp.group.consumable",
+        "esp.group.other",
+        "esp.group.collectible"
     };
 
     // 2) 每个 item key 属于哪个分组（key 必须和 espItems/espItemsOrder 里的完全一致）
     static const std::map<std::string, std::string> espItemToGroup = {
-        {"Terminal", "门禁钥匙终端"},
-        {"KEYCARD", "门禁钥匙终端"},
-        { "BULKHEAD_KEY", "门禁钥匙终端" },
-        { "Bulkhead", "门禁钥匙终端" },
+        {"Terminal", "esp.group.security"},
+        {"KEYCARD", "esp.group.security"},
+        { "BULKHEAD_KEY", "esp.group.security" },
+        { "Bulkhead", "esp.group.security" },
 
-        { "Collection Case", "任务物品" },
-        { "Cryo Hardcase", "任务物品" },
-        { "Cargo Crate", "任务物品" },
-        { "Cargo Crate High Security", "任务物品" },
-        {"HSU", "任务物品"},
-        {"NEONATE_HSU", "任务物品"},
-        {"IMPRINTED NEONATE HSU", "任务物品"},
-        {"MATTER_WAVE_PROJECTOR", "任务物品"},
-        {"Power Cell", "任务物品"},
-        {"OSIP Hormone", "任务物品" },
-        { "Plant Sample", "任务物品" },
-        {"Fog Repeller Turbine", "任务物品"},
-        { "Personnel ID", "任务物品" },
-        { "Partial Decoder", "任务物品" },
-        { "Micro Drive", "任务物品" },
-        { "Hard drive", "任务物品" },
-        { "GLP Hormone", "任务物品" },
-        { "DATA_CUBE", "任务物品" },
-        { "DATA SPHERE", "任务物品" },
+        { "Collection Case", "esp.group.objective" },
+        { "Cryo Hardcase", "esp.group.objective" },
+        { "Cargo Crate", "esp.group.objective" },
+        { "Cargo Crate High Security", "esp.group.objective" },
+        {"HSU", "esp.group.objective"},
+        {"NEONATE_HSU", "esp.group.objective"},
+        {"IMPRINTED NEONATE HSU", "esp.group.objective"},
+        {"MATTER_WAVE_PROJECTOR", "esp.group.objective"},
+        {"Power Cell", "esp.group.objective"},
+        {"OSIP Hormone", "esp.group.objective" },
+        { "Plant Sample", "esp.group.objective" },
+        {"Fog Repeller Turbine", "esp.group.objective"},
+        { "Personnel ID", "esp.group.objective" },
+        { "Partial Decoder", "esp.group.objective" },
+        { "Micro Drive", "esp.group.objective" },
+        { "Hard drive", "esp.group.objective" },
+        { "GLP Hormone", "esp.group.objective" },
+        { "DATA_CUBE", "esp.group.objective" },
+        { "DATA SPHERE", "esp.group.objective" },
 
 
-        {"Ammo Pack", "消耗品"},
-        {"MediPack", "消耗品"},
-        {"Tool Refill Pack", "消耗品"},
-        {"Disinfection Pack", "消耗品"},
-        { "C-Foam Grenade", "消耗品" },
-        { "C-Foam Tripmine", "消耗品" },
-        { "Long Range Flashlight", "消耗品" },
-        { "Lock Melter", "消耗品" },
-        { "I2-LP Syringe", "消耗品"},
-        { "IIx Syringe", "消耗品"},
-        { "Glow Stick", "消耗品" },
-        { "Fog Repeller", "消耗品" },
-        { "Explosive Trip Mine", "消耗品" },
+        {"Ammo Pack", "esp.group.consumable"},
+        {"MediPack", "esp.group.consumable"},
+        {"Tool Refill Pack", "esp.group.consumable"},
+        {"Disinfection Pack", "esp.group.consumable"},
+        { "C-Foam Grenade", "esp.group.consumable" },
+        { "C-Foam Tripmine", "esp.group.consumable" },
+        { "Long Range Flashlight", "esp.group.consumable" },
+        { "Lock Melter", "esp.group.consumable" },
+        { "I2-LP Syringe", "esp.group.consumable"},
+        { "IIx Syringe", "esp.group.consumable"},
+        { "Glow Stick", "esp.group.consumable" },
+        { "Fog Repeller", "esp.group.consumable" },
+        { "Explosive Trip Mine", "esp.group.consumable" },
 
-        {"artifact_muted", "收集物"},
-        {"artifact_bold", "收集物"},
-        {"artifact_aggressive", "收集物"},
+        {"artifact_muted", "esp.group.collectible"},
+        {"artifact_bold", "esp.group.collectible"},
+        {"artifact_aggressive", "esp.group.collectible"},
 
     };
     // 3) 小工具：拿分组名（没配置就归到 Other）
     inline const std::string& EspGroupOf(const std::string& key)
     {
-        static const std::string kOther = "Other";
+        static const std::string kOther = "esp.group.other";
         auto it = espItemToGroup.find(key);
         return (it == espItemToGroup.end()) ? kOther : it->second;
     }
@@ -168,7 +169,7 @@ namespace ESP
             if (it == espItems.end()) continue; // 防御：order 里有但 map 里没有
 
             // fn(key, label)
-            fn(key, it->second);
+            fn(key, I18n::Tr(key.c_str()));
         }
     }
 

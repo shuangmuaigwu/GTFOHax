@@ -50,6 +50,7 @@ set(GTFOHAX_SOURCES
     ${SRC_DIR}/hacks/player.cpp
     ${SRC_DIR}/user/main.cpp
     ${SRC_DIR}/globals.cpp
+    ${SRC_DIR}/i18n.cpp
     ${SRC_DIR}/utils/math.cpp
     ${SRC_DIR}/ui.cpp
     ${SRC_DIR}/InputUtil.cpp

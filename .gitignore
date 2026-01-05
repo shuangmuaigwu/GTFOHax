@@ -372,3 +372,4 @@ FodyWeavers.xsd
 /build/
 target/
 .serena/
+.idea/

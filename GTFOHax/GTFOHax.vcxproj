@@ -55,6 +55,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="globals.cpp" />
+    <ClCompile Include="i18n.cpp" />
     <ClCompile Include="hacks\aimbot.cpp" />
     <ClCompile Include="hacks\enemy.cpp" />
     <ClCompile Include="hacks\esp.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="framework\il2cpp-init.h" />
     <ClInclude Include="framework\pch-il2cpp.h" />
     <ClInclude Include="globals.h" />
+    <ClInclude Include="i18n.h" />
     <ClInclude Include="hacks\aimbot.h" />
     <ClInclude Include="hacks\enemy.h" />
     <ClInclude Include="hacks\esp.h" />
