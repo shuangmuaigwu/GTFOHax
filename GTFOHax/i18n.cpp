@@ -147,9 +147,9 @@ namespace
         {"OSIP Hormone", "OSIP激素", "OSIP Hormone"},
         {"C-Foam Grenade", "C-泡沫手雷(C-Foam Grenade)", "C-Foam Grenade"},
         {"C-Foam Tripmine", "C-泡沫绊雷(C-Foam Tripmine)", "C-Foam Tripmine"},
-        {"artifact_muted", "红色激素", "artifact_muted"},
-        {"artifact_bold", "紫色激素", "artifact_bold"},
-        {"artifact_aggressive", "普通激素", "artifact_aggressive"},
+        {"artifact_muted", "普通", "artifact_muted"},
+        {"artifact_bold", "紫色", "artifact_bold"},
+        {"artifact_aggressive", "红色", "artifact_aggressive"},
     };
 
     static const I18n::LanguageOption kLanguages[] = {
